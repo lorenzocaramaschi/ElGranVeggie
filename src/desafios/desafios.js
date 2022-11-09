@@ -1,65 +1,82 @@
-// Creamos la clase usuario
-class Usuario {
-  // Le asignamos a la clase atributos dentro de un constructor
-  constructor(nombre, apellido, libros, mascotas) {
-    (this.nombre = nombre),
-      (this.apellido = apellido),
-      (this.libros = [libros]),
-      (this.mascotas = [mascotas]);
+// Desafío: Manejo de Archivos en Javascript
+
+const fs = require("fs");
+
+class Contenedor {
+  constructor(ruta) {
+    this.ruta = ruta;
   }
-  // Buscamos el nombre y apellido y lo mostramos usando template strings
-  getFullName() {
-    return `${this.nombre} ${this.apellido}`;
-  }
-  // Pusheamos al array de mascotas la mascota que recibimos
-  addMascotas(mascota) {
-    this.mascotas.push(mascota);
-  }
-  // Mostramos la cantidad de mascotas, a través de la longitud del array que las contiene
-  countMascotas() {
-    return this.mascotas.length;
-  }
-  // Pusheamos un objeto con el nombre y el autor del libro que ingrese el usuario
-  addBook(nombre, autor) {
-    this.libros.push({
-      nombre: nombre,
-      autor: autor,
-    });
-  }
-  // Creamos un array vacío en donde guardaremos los nombres de los libros, iteramos sobre el array y por cada indice pusheamos el nombre de cada libro
-  getBookNames() {
-    let nombreLibros = [];
-    for (let i = 0; i < this.libros.length; i++) {
-      const element = this.libros[i].nombre;
-      nombreLibros.push(element);
+
+  async save(obj) {
+    const listado = await this.getAll();
+
+    if (
+      listado.length > 0 &&
+      JSON.parse(response).some((el) => el.title === object.title)
+    ) {
+      console.log("El producto ya se encuentra en el catálogo");
     }
-    // Retornamos el array con los nombres de los libros
-    return nombreLibros;
+
+    let nuevoId;
+
+    if (listado.length == 0) {
+      nuevoId = 1;
+    } else {
+      nuevoId = listado[listado.length - 1].id + 1;
+    }
+
+    const nuevoObjConId = { ...obj, id: nuevoId };
+
+    listado.push(nuevoObjConId);
+
+    try {
+      await fs.promises.writeFile(this.ruta, JSON.stringify(listado, null, 2));
+      return nuevoId;
+    } catch (error) {
+      throw new Error(`Error al guardar el objeto: ${error}`);
+    }
+  }
+
+  async getAll() {
+    try {
+      const data = await fs.promises.readFile(this.ruta, "utf8");
+      return JSON.parse(data);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getById(id) {
+    try {
+      const listado = await this.getAll();
+      return listado.find((item) => item.id == id) ?? null;
+    } catch (error) {
+      throw new Error(`Error al obtener el objeto: ${error}`);
+    }
+  }
+
+  async deleteById(id) {
+    const listado = await this.getAll();
+
+    const nuevoListado = listado.filter((item) => item.id != id);
+
+    try {
+      await fs.promises.writeFile(
+        this.ruta,
+        JSON.stringify(nuevoListado, null, 2)
+      );
+    } catch (error) {
+      throw new Error(`Error al borrar el objeto: ${error}`);
+    }
+  }
+
+  async deleteAll() {
+    try {
+      await fs.promises.writeFile(this.ruta, JSON.stringify([], null, 2));
+    } catch (error) {
+      throw new Error(`Error al borrar los objetos: ${error}`);
+    }
   }
 }
 
-// Creo un nuevo usuario con la clase Usuario, con atributos arbitrariamente seleccionados
-let usuario = new Usuario(
-  "Lorenzo",
-  "Caramaschi",
-  {
-    nombre: "Amor en los tiempos del cólera",
-    autor: "Gabriel Garcia Marquez",
-  },
-  "Perro"
-);
-
-// Muestro por consola el usuario antes de sufrir alteraciones
-console.log(usuario);
-// Le realizo alteraciones al usuario creado
-usuario.getFullName();
-usuario.addMascotas("Tucán");
-usuario.countMascotas();
-usuario.addBook("Cortázar", "Rayuela");
-usuario.getBookNames();
-// Muestro como esas alteraciones ahora se ven en el usuario
-console.log(usuario);
-// Muestro los otros datos que se pueden obtener con los metodos de la clase
-console.log(
-  `Nombre completo del usuario: ${usuario.getFullName()} \nContador de mascotas: ${usuario.countMascotas()} \nNombre de los libros: ${usuario.getBookNames()}`
-);
+module.exports = Contenedor;
