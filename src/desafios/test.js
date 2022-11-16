@@ -1,7 +1,6 @@
 const Contenedor = require("./desafios");
 
 // Data
-
 const item1 = {
   title: "Escuadra",
   price: 123.45,
@@ -36,23 +35,8 @@ async function main() {
   // Guardo 2 items
   let id1 = await contenedor.save(item1);
   let id2 = await contenedor.save(item2);
-
-  // Muestro denuevo
-  console.log(datos);
-
-  //Busco por id
-  let busca1 = await contenedor.getById(1);
-  console.log(busca1);
-
-  //Borro el id 2
-  await contenedor.deleteById(2);
-  let delete1 = await contenedor.getAll();
-  console.log(delete1);
-
-  // Borro todo
-  await contenedor.deleteAll();
-  let delete2 = await contenedor.getAll();
-  console.log(delete2);
+  let id3 = await contenedor.save(item3);
 }
 
 main();
+

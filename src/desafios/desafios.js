@@ -1,6 +1,5 @@
-// Desafío: Manejo de Archivos en Javascript
-
 const fs = require("fs");
+const express = require("express")
 
 class Contenedor {
   constructor(ruta) {
@@ -10,12 +9,12 @@ class Contenedor {
   async save(obj) {
     const listado = await this.getAll();
 
-    if (
+   /*  if (
       listado.length > 0 &&
       JSON.parse(response).some((el) => el.title === object.title)
     ) {
       console.log("El producto ya se encuentra en el catálogo");
-    }
+    } */
 
     let nuevoId;
 
@@ -78,5 +77,34 @@ class Contenedor {
     }
   }
 }
+
+let productos = []
+let datosTexto = fs.readFileSync("./productos.txt", "utf-8");
+productos = JSON.parse(datosTexto)
+let indexRandom = Math.floor(Math.random() * 6)
+
+
+const app = express()
+const PORT = 8080
+
+const server = app.listen(PORT,()=>{
+  console.log("Server working in port 8080");
+})
+
+server.on("error",err => console.log(`Error en el servidor: ${err}`))
+
+app.get('/',(req,res)=>{
+  res.send('Inicio de la pagina')
+})
+
+app.get('/productos',(req,res)=>{
+  res.send(productos)
+})
+
+app.get('/productoRandom',(req,res)=>{
+  res.send(productos[indexRandom])
+})
+
+console.log(indexRandom);
 
 module.exports = Contenedor;
