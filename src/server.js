@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+app.use(json())
 app.use(urlencoded({ extended: true }));
 app.use("/api/product", router);
 app.use("/", baseRouter);

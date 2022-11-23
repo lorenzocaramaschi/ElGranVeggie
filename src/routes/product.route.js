@@ -53,7 +53,7 @@ router
   });
 
 router
-  .route("/id:")
+  .route("/:id")
   .put((req, res) => {
     const { id } = req.params;
     const { title, price, thumbnail } = req.body;
