@@ -27,17 +27,46 @@
     <title>Musicfy</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script>
+      const template = Handlebars.compile(`
+      <h1>Menu Pizzas</h1>
+      <ul>
+        <li>
+          <p><strong>Nombre:</strong>{{name1}}</p>
+          <p><strong>Precio:</strong>{{price1}}</p>
+          <p><strong>Descripcion:</strong>{{description1}}</p>
+        </li>
+        <li>
+          <p><strong>Nombre:</strong>{{name2}}</p>
+          <p><strong>Precio:</strong>{{price2}}</p>
+          <p><strong>Descripcion:</strong>{{description2}}</p>
+        </li>
+        <li>
+          <p><strong>Nombre:</strong>{{name3}}</p>
+          <p><strong>Precio:</strong>{{price3}}</p>
+          <p><strong>Descripcion:</strong>{{description3}}</p>
+        </li>
+      </ul>
+    `);
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    console.log("Template",template);
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    const html = template({
+      name1: "Palmito",
+      price1: 550,
+      description1: "Esta es una mala pizza",
+      name2: "Muzzarela",
+      price2: 650,
+      description2: "Esta es una normal pizza",
+      name3: "Rúcula",
+      price3: 750,
+      description3: "Esta es una excelente pizza",
+    })
+
+    console.log("HTML",html);
+
+    document.querySelector("body").innerHTML = html
+    </script>
   </body>
 </html>
