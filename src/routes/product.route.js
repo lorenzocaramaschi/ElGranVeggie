@@ -1,26 +1,23 @@
 import { Router } from "express";
 
 const router = Router();
-const products = [
-  {
-    title: "Camara",
-    price: 100,
-    thumbnail: "Foto1",
-    id: 1,
-  },
-  {
-    title: "Camara 2",
-    price: 200,
-    thumbnail: "Foto2",
-    id: 2,
-  },
-  {
-    title: "Camara 3",
-    price: 300,
-    thumbnail: "Foto3",
-    id: 3,
-  },
-];
+const products = [];
+
+router.get("/", (req, res) => {
+  res.render("productForm.ejs");
+});
+
+router.get("/product", (req, res) => {
+  res.render("products.ejs",{products});
+});
+
+router.post("/product", (req, res) => {  
+  const { name, price, thumbnail } = req.body;
+
+  products.push({name,price,thumbnail})
+
+  res.redirect("/")
+});
 
 router
   .route("/")
