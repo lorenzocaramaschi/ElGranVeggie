@@ -3,22 +3,22 @@ const messageForm = document.getElementById("messageForm");
 const mailInput = document.getElementById("mailInput");
 const messageInput = document.getElementById("messageInput");
 const messagesPool = document.getElementById("messagesPool");
+const today = new Date();
+const now = today.toLocaleTimeString('en-US');
 
-// Definimos la funcion que envia mensajes
 const sendMessage = (messageInfo) => {
-  // Emitiendo el evento "client:message" para mandar la informacion del mensaje al back a traves de websocket
   socket.emit("client:message", messageInfo);
 };
 
 const renderMessage = (messagesData) => {
   const html = messagesData.map((messageInfo) => {
     return `<div class="toast toast-demo fade show" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong style="color: blue;">${messageInfo.username}</strong> 
-      <small></small>         
+    <div class="toast-header justify-content-between">
+      <strong style="color: blue;">${messageInfo.username}</strong>       
+      <small style="color: brown;">${now}</small>         
     </div>
     <div style="color: green;" class="toast-body">
-    ${messageInfo.message}
+    <i>${messageInfo.message}</i>
     </div>
   </div>`;
   });
@@ -26,21 +26,16 @@ const renderMessage = (messagesData) => {
   messagesPool.innerHTML = html.join(" ");
 };
 
-// Definimos la funcion submit handler, se ejecuta cuando se dispara el evento submit del form
 const submitHandler = (event) => {
-  //Ejecutamos la funcion preventDefault() para evitar que se recargue la pagina
   event.preventDefault();
 
-  // Definimos la informacion del mensaje, es un obejto con una propiedad "username" y "message"
   const messageInfo = {
     username: mailInput.value,
-    message: messageInput.value,    
+    message: messageInput.value,
   };
 
-  // Ejecutamos la funcion sendMessage() que la encargada de enviar el mensaje al back pasandole como parametro la informacion del mensaje
   sendMessage(messageInfo);
 
-  // Vaciamos el message input asi queda libre para escribir un nuevo mensaje
   messageInput.value = "";
   mailInput.readOnly = true;
 };
