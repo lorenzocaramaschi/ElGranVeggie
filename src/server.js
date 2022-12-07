@@ -1,31 +1,36 @@
-import express, { json, urlencoded } from "express";
-import baseRouter from "./routes/base.route.js";
-import router from "./routes/product.route.js";
-import { fileURLToPath } from 'url'
-import { dirname } from "path";
+import express from "express";
 import { Server as IOServer } from "socket.io";
+import {dirname} from 'path'
+import { fileURLToPath } from "url";
+import moment from 'moment'
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express();
-app.use(json())
-app.use(urlencoded({ extended: true }));
-app.use("/api/product", router);
-app.use("/", router);
-app.use(express.static(__dirname+"/public"))
-app.set('view engine','ejs')
-app.set('views',__dirname+"/views")
-const serverConnected = app.listen(8080, (error) => {
-  if (error) {
-    console.log("Error al iniciar la app", error);
-  } else {
-    console.log("Servidor escuchando el puerto 8080");
-  }
+const expressServer = app.listen(8080, () => {
+  console.log("Server listening port 8080");
 });
-const io = new IOServer (serverConnected)
+const io = new IOServer(expressServer);
+const messages = [];
 
-io.on("connection",(socket)=>{
-  console.log("New connection: socket ID: ");
+app.use(express.static(__dirname + "/public"));
+app.get('/',(req,res)=>{
+  res.render('index.html')
 })
+
+// Nos ponemos a escuchar el evento por default de socket io que se ejecuta cuando se conecta un cliente
+io.on("connection", (socket) => {
+  // Logeamos el id del socket que se conecto
+  console.log(`New connection, socket ID: ${socket.id}`);
+
+  // Cuando se conecta un nuevo cliente le emitimos a ese cliente todos los mensajes que se mandaron hasta el momento
+  socket.emit("server:message", messages);
+
+  // Nos ponesmo a escuchar el evento "client:message" que recibe la info de un mensaje
+  socket.on("client:message", (messageInfo) => {
+    // Actualizamos nuestro arreglo de mensajes
+    messages.push(messageInfo);
+
+    // Emitimos a TODOS los sockets conectados el arreglo de mensajes actualizado
+    io.emit("server:message", messages);
+  });
+});
