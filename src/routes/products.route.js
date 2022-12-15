@@ -7,15 +7,15 @@ productsRouter.get("/", (req, res) => {
   res.render("productForm.ejs");
 });
 
-productsRouter.get("api/products/product", (req, res) => {
+productsRouter.get("/product", (req, res) => {
   res.render("products.ejs",{products});
 });
 
-productsRouter.post("api/products/product", (req, res) => {  
+productsRouter.post("/product", (req, res) => {  
   const { name, price, thumbnail } = req.body;
   products.push({name,price,thumbnail})
 
-  res.redirect("/")
+  res.redirect("product")
 });
 
 productsRouter

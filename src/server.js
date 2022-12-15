@@ -14,6 +14,8 @@ const expressServer = app.listen(PORT, () => {
 const io = new IOServer(expressServer);
 const messages = [];
 
+app.use(json())
+app.use(urlencoded({ extended: true }));
 app.use("/api/products",productsRouter)
 app.use(express.static(__dirname + "/public"));
 app.set('view engine','ejs')
@@ -21,8 +23,7 @@ app.set('views',__dirname+"/views")
 app.get("/", (req, res) => {
   res.render("products.html");
 });
-app.use(json())
-app.use(urlencoded({ extended: true }));
+
 
 
 
