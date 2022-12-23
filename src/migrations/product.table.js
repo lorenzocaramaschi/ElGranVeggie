@@ -6,7 +6,7 @@ const config = {
     host: "127.0.0.1",
     user: "root",
     password: "",
-    database: "mibase",
+    database: "products",
   },
   pool: { min: 0, max: 7 },
 };
@@ -20,7 +20,7 @@ const createTable = async () => {
       productTable.increments("id").primary();
       productTable.string("title", 50).notNullable();
       productTable.integer("price").notNullable();
-      productTable.string("thumbnail", 500).notNullable();
+      productTable.string("thumbnail", 10000).notNullable();
     });
 
     console.log("Product table created!");

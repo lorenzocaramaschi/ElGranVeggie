@@ -15,6 +15,7 @@ const database = knex(config);
 
 const createMessageTable = async () => {
   try {
+    await database.schema.dropTableIfExists("message");
     await database.schema.createTable("message", (messageTable) => {
       messageTable.increments("id").primary();
       messageTable.string("username", 100).notNullable();
