@@ -28,8 +28,10 @@ app.set("views", join(__dirname, "/views"));
 
 app.use("/", router);
 
-const expressServer = app.listen("3000", () => {
-  console.log("server listening port 3000");
+const PORT = 8080
+
+const expressServer = app.listen(PORT, () => {
+  console.log(`server listening port ${PORT}`);
 });
 
 const io = new IOServer(expressServer);
