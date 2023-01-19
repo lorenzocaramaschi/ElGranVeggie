@@ -1,12 +1,10 @@
-import { Router } from 'express';
-import Contenedor from "../api.js";
+import { Router } from "express";
+import { petRouter } from "./pet.route.js";
+import { userRouter } from "./user.route.js";
 
-const router = Router()
+const router = Router();
 
-const api = new Contenedor('./src/productos.txt')
-
-router.get('/', async (req, res) => {
-    res.render('form', { items: await api.getAll() })
-})
+router.use("/pet", petRouter);
+router.use("/user", userRouter);
 
 export default router;
