@@ -8,11 +8,11 @@ const app = express();
 app.use(json());
 app.use("/api", routes);
 
-const PORT = 8080;
+const PORT = 3000
 
 db.connectDb(config.dbUrl).then(() => {
-  console.log("Database connected");
-  app.listen(3000, () => {
-    console.log("Server listening to port: "+PORT);
-  });
+    console.log("You've connected to the database!");
+    app.listen(PORT, () => {
+        console.log("Server listening to PORT: "+PORT);
+    });
 });

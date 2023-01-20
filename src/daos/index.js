@@ -1,16 +1,18 @@
 import { config } from "../config/config.js";
-import { PetMongoDao } from "./petMongo.dao.js";
-import { UserMongoDao } from "./userMongo.dao.js";
+import { CartMongoDao } from "./cartMongo.dao.js";
+import { ProductMongoDao } from "./productMongo.dao.js";
+import { CartFirebaseDao } from "./cartFirebase.dao.js";
+import { ProductFirebaseDao } from "./productFirebase.dao.js";
 
-let PetDao;
-let UserDao;
+let CartDao;
+let ProductDao;
 
 if (config.database === "MONGO") {
-  PetDao = PetMongoDao;
-  UserDao = UserMongoDao;
+    CartDao = CartMongoDao;
+    ProductDao = ProductMongoDao;
 } else {
-  //   PetDao = PetFirebaseDao;
-  //   UserDao = UserFirebaseDao;
+    CartDao = CartFirebaseDao;
+    ProductDao = ProductFirebaseDao;
 }
 
-export const Daos = { PetDao, UserDao };
+export const Daos = { CartDao, ProductDao };
