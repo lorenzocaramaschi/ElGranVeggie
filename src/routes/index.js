@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { petRouter } from "./pet.route.js";
-import { userRouter } from "./user.route.js";
+import { cartRouter } from "./cart.route.js";
+import { productRouter } from "./product.route.js";
 
 const router = Router();
 
-router.use("/pet", petRouter);
-router.use("/user", userRouter);
+router.use("/cart", cartRouter);
+router.use("/product", productRouter);
 
 export default router;
