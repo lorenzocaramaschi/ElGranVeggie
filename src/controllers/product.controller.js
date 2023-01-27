@@ -5,8 +5,9 @@ const Product = new Daos.ProductDao(products);
 
 const getAllProducts = async (req, res) => {
     try {
-        const response = await Product.getAll();
+        const response = await Product.getAll();        
         res.json(response);
+        
     } catch (err) {
         throw new Error();
     }
