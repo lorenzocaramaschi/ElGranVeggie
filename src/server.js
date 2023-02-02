@@ -5,6 +5,7 @@ import { engine } from "express-handlebars";
 import router from "./routes/index.js";
 import { Server as IOServer } from "socket.io";
 import Contenedor from "./api.js";
+import moment from "moment/moment.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -28,7 +29,7 @@ app.set("views", join(__dirname, "/views"));
 
 app.use("/", router);
 
-const PORT = 8080
+const PORT = 8080;
 
 const expressServer = app.listen(PORT, () => {
   console.log(`server listening port ${PORT}`);
@@ -43,7 +44,7 @@ const productApi = new Contenedor(
       host: "127.0.0.1",
       user: "root",
       password: "",
-      database: "mibase",
+      database: "products",
     },
     pool: { min: 0, max: 7 },
   },
@@ -71,7 +72,7 @@ io.on("connection", async (socket) => {
   socket.emit("server:product", await productApi.getAll());
 
   socket.on("client:message", async (messageInfo) => {
-    await messageApi.save({ ...messageInfo, time: Date.now() });
+    await messageApi.save({ ...messageInfo, time: moment().format("LT") });
     io.emit("server:message", await messageApi.getAll());
   });
 
