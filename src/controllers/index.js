@@ -3,20 +3,23 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const users = ["salva"];
+const users = [];
+const passwords = [];
 
 const serverLogin = (req, res) => {
   res.sendFile(join(__dirname, "../../views/login.html"));
 };
 
 const login = (req, res) => {
-  const { username } = req.body;
+  const { mail, password } = req.body;
 
-  if (!users.includes(username)) {
+  if (!users.includes(mail)) {
     return res.send("Invalid credentials");
+  } else if (users.includes(mail) && !passwords.includes(password)) {
+    return res.send("Wrong password");
   }
 
-  req.session.user = username;
+  req.session.user = mail;
 
   res.redirect("/welcome");
 };
@@ -26,28 +29,32 @@ const serverResgister = (req, res) => {
 };
 
 const register = (req, res) => {
-  const { username } = req.body;
+  const { mail, password } = req.body;
 
-  if (users.includes(username)) {
-    return res.send("Username already in use");
+  if (users.includes(mail)) {
+    return res.send("mail already in use");
   }
 
-  users.push(username);
+  users.push(mail);
+  passwords.push(password);
+
+  console.log(users);
+  console.log(passwords);
 
   res.redirect("/login");
 };
 
 const logout = (req, res) => {
-  const username = req.session.user;
+  const mail = req.session.user;
   req.session.destroy();
 
-  res.render("logout", { username });
+  res.render("logout", { mail });
 };
 
 const serverWelcome = (req, res) => {
-  const username = req.session.user;
+  const mail = req.session.user;
 
-  res.render("welcome", { username });
+  res.render("welcome", { mail });
 };
 
 export const authController = {
