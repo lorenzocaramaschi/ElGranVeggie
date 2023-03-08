@@ -1,7 +1,7 @@
 {
   "name": "handlebars",
   "version": "1.0.0",
-  "description": "",
+  "description": "Musicfy es un ecommerce dedicado a los artistas musicales que quieren vender su contenido exclusivamente para sus seguidores y compartirlo de una forma distinta y más cercana.",
   "main": "./src/server.js",
   "type": "module",
   "scripts": {
@@ -18,5 +18,14 @@
     "express-session": "^1.17.3",
     "firebase": "^9.16.0",
     "mongoose": "^6.9.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorenzocaramaschi/E-Commerce-Musicfy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lorenzocaramaschi/E-Commerce-Musicfy/issues"
+  },
+  "homepage": "https://github.com/lorenzocaramaschi/E-Commerce-Musicfy#readme"
 }
