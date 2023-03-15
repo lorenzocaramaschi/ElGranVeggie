@@ -1,14 +1,9 @@
-node --prof ./src/server.js
-artillery quick --count 50 -n 20 http://localhost:8080/info > result_fork.txt
-node --prof-process result_fork_sinCL.log > result_fork_prof_sinCL.txt
-node --prof-process result_fork_conCL.log > result_fork_prof_conCL.txt
+Profiling NODE:
 
-node --inspect ./src/server.js
+1- node --prof src/server.js
 
-     "scripts": {
-        "test": "node ./lib/benchmark.js",
-        "start": "0x server.js"
-    },
+2- Usar Artillery
 
-npm start
-npm test
+3- Cambiar nombre del archivo isolated al que quieras
+
+4- node --prof-process > .txt
