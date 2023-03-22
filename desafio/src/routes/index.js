@@ -5,8 +5,7 @@ const router = Router();
 
 router.get("/saludo", (req, res) => {
   try {
-    throw { error: "aah" };
-    res.send("Hola");
+    throw { error: "aah" };    
   } catch (err) {
     logger.error(err, "Error =>");
     res.sendStatus(500);
