@@ -1,24 +1,10 @@
 import { Router } from "express";
-import logger from "../logger.js";
+import { productRouter } from "./product.route.js";
+import { userRouter } from "./user.route.js";
 
 const router = Router();
 
-router.get("/saludo", (req, res) => {
-  try {
-    throw { error: "aah" };    
-  } catch (err) {
-    logger.error(err, "Error =>");
-    res.sendStatus(500);
-  }
-});
-
-router.get("/test", (req, res) => {
-  try {
-    res.send("Up & running");
-  } catch (err) {
-    logger.error(err, "Error =>");
-    res.sendStatus(500);
-  }
-});
+router.use("/products", productRouter);
+router.use("/users", userRouter);
 
 export default router;
