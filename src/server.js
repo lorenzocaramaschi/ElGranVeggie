@@ -1,39 +1,32 @@
-import MongoStore from "connect-mongo";
 import express, { json, urlencoded } from "express";
-import expHbs from "express-handlebars";
-import session from "express-session";
-import { configObject } from "./config/index.js";
+import mongoose from "mongoose";
 import router from "./routes/index.js";
+import cors from "cors";
+import { config } from "./config/config.js";
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const mongoOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}; 
+const PORT = config.port;
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.use(json());
 app.use(urlencoded({ extended: true }));
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: false,
-    rolling: true,
-    secret: "coderhouse",
-    store: new MongoStore({
-      mongoUrl: configObject.mongoUrl,
-      mongoOptions,
-    }),
-    cookie: {
-      maxAge: 600000, 
-    },
-  })
-);
-
-app.engine(".hbs", expHbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
-app.set("view engine", ".hbs");
+app.use(cors());
 
 app.use("/", router);
+await mongoose.connect(config.db_url);
 
-app.listen(3000, () => {
-  console.log("Server listening port 3000");
+console.log("Database connected!");
+
+app.listen(PORT, (err) => {
+  if (err) {
+    console.log(`Error intializing server ${JSON.stringify(err)}`);
+  }
+
+  console.log(`Server listening port: ${PORT}`);
 });

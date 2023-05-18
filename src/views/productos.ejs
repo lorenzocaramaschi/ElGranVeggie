@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>El Gran Veggie</title>
+    <link rel="shortcut icon" href="https://i.imgur.com/NOhbrgw.png" type="image/x-icon">
+  </head>
+  <body>
+    <h1>Productos</h1>
+    <div style="display: grid; grid-template-columns: repeat(3,1fr);">
+      <% products.forEach(product => { %>
+        <div>
+            <a href="/productos/<%= product._id %>">
+            <img width="150" height="150" src=<%= product.image %> />
+            <h2><%= product.name %></h2>
+            <p><%= product.description %></p>
+            <h3>$<%= product.price %></h3>
+            <h4>Stock: <%= product.stock %></h4> 
+        </a>
+        </div>
+                 
+      <% }); %>
+      </div>
+  </body>
+</html>

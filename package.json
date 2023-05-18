@@ -1,31 +1,33 @@
 {
-  "name": "handlebars",
+  "name": "ecommerce-caramaschi",
   "version": "1.0.0",
-  "description": "Musicfy es un ecommerce dedicado a los artistas musicales que quieren vender su contenido exclusivamente para sus seguidores y compartirlo de una forma distinta y más cercana.",
+  "description": "",
   "main": "./src/server.js",
   "type": "module",
   "scripts": {
     "start": "nodemon ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "connect-mongo": "^4.6.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-handlebars": "5.3.3",
-    "express-session": "^1.17.3",
-    "firebase": "^9.16.0",
-    "mongoose": "^6.9.0"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lorenzocaramaschi/E-Commerce-Musicfy.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/lorenzocaramaschi/E-Commerce-Musicfy/issues"
   },
-  "homepage": "https://github.com/lorenzocaramaschi/E-Commerce-Musicfy#readme"
+  "homepage": "https://github.com/lorenzocaramaschi/E-Commerce-Musicfy#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "socket.io": "^4.6.1"
+  }
 }
